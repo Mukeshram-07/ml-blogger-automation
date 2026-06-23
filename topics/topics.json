@@ -60,10 +60,10 @@
       "Reproducibility requires logging everything that affects the output"
     ],
     "optional_code_snippet_idea": "mlflow.start_run() block with param logging, metric logging, and model registration",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-23T16:17:30.032605+00:00",
+    "blogger_post_id": "4184907778070890150",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/streamlining-ml-experiment-tracking.html"
   },
   {
     "topic_id": 3,
