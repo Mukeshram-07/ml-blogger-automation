@@ -14,7 +14,7 @@
       "Deployment is more than just creating an API endpoint",
       "Input validation with Pydantic catches problems before they reach the model",
       "Docker keeps the environment stable across machines and CI",
-      "Health check endpoints matter when you're running in containers"
+      "Health check endpoints matter when running in containers"
     ],
     "mistakes": [
       "I ignored proper error handling at first and the API crashed silently",
@@ -45,23 +45,23 @@
     "difficulty": "Intermediate",
     "experience_points": [
       "Before MLflow I was saving metrics in print statements and notebooks",
-      "MLflow autolog works for sklearn and XGBoost out of the box — no extra code",
+      "MLflow autolog works for sklearn and XGBoost out of the box",
       "The model registry lets you move models from staging to production with a single API call",
       "Comparing runs side by side in the UI saves hours of manual spreadsheet work"
     ],
     "mistakes": [
-      "I ran 50 experiments without naming them and could not figure out which one was best later",
+      "I ran 50 experiments without naming them and could not figure out which was best",
       "I did not log the random seed and could not reproduce my best result",
-      "I logged too many metrics and the UI became cluttered and hard to read"
+      "I logged too many metrics and the UI became cluttered"
     ],
     "lessons": [
-      "Log the essentials: params, metrics, model artifact, and the dataset version",
-      "Use meaningful run names — you will thank yourself later",
+      "Log the essentials: params, metrics, model artifact, and dataset version",
+      "Use meaningful run names",
       "Reproducibility requires logging everything that affects the output"
     ],
     "optional_code_snippet_idea": "mlflow.start_run() block with param logging, metric logging, and model registration",
     "status": "posted",
-    "posted_at": "2026-06-23T16:17:30.032605+00:00",
+    "posted_at": "2026-06-23T16:17:30.000000+00:00",
     "blogger_post_id": "4184907778070890150",
     "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/streamlining-ml-experiment-tracking.html"
   },
@@ -80,17 +80,17 @@
       "I trained on the full dataset without a proper train/test split",
       "I did not check for data leakage and got suspiciously high accuracy",
       "Scaling features made a huge difference for models like SVM and KNN",
-      "I used accuracy as the only metric on an imbalanced dataset — it was meaningless"
+      "I used accuracy as the only metric on an imbalanced dataset"
     ],
     "mistakes": [
-      "My test set contained rows that influenced the scaler fit — classic leakage",
-      "I never looked at the confusion matrix and shipped a model that missed all minority class samples",
-      "I tuned hyperparameters on the test set instead of using cross-validation"
+      "My test set contained rows that influenced the scaler fit",
+      "I never looked at the confusion matrix",
+      "I tuned hyperparameters on the test set instead of cross-validation"
     ],
     "lessons": [
       "Always split data before any preprocessing step",
-      "Use multiple metrics: precision, recall, F1, and AUC for imbalanced problems",
-      "Cross-validation is not optional — it is the minimum standard"
+      "Use multiple metrics for imbalanced problems",
+      "Cross-validation is not optional"
     ],
     "optional_code_snippet_idea": "sklearn Pipeline with StandardScaler, train_test_split, and cross_val_score",
     "status": "pending",
@@ -113,17 +113,17 @@
     "experience_points": [
       "A model that performs well in testing can silently degrade in production",
       "Data drift is the most common reason models stop working after deployment",
-      "Prometheus and Grafana together give you real-time visibility into model behavior",
-      "Setting up prediction distribution monitoring caught a data pipeline bug before users noticed"
+      "Prometheus and Grafana give real-time visibility into model behavior",
+      "Prediction distribution monitoring caught a data pipeline bug early"
     ],
     "mistakes": [
-      "I thought deployment was the finish line — I had no monitoring set up for weeks",
-      "I only monitored infrastructure metrics, not model-specific metrics like prediction confidence",
-      "I had no alerting — I found out about drift from a user complaint, not a dashboard"
+      "I thought deployment was the finish line with no monitoring",
+      "I only monitored infrastructure metrics, not model-specific ones",
+      "I had no alerting and found out about drift from a user complaint"
     ],
     "lessons": [
       "Monitor input data distributions, not just model outputs",
-      "Set up alerting on day one of deployment, not when something breaks",
+      "Set up alerting on day one of deployment",
       "Treat model monitoring as a first-class engineering concern"
     ],
     "optional_code_snippet_idea": "custom Prometheus counter and histogram for prediction tracking in FastAPI",
@@ -144,18 +144,18 @@
     ],
     "difficulty": "Intermediate",
     "experience_points": [
-      "GitHub Actions is free for public repos and runs on a generous quota for private ones",
+      "GitHub Actions is free for public repos",
       "I automated model validation checks before any merge to main",
       "The pipeline runs unit tests, linting, and a smoke test on the model artifact",
-      "Environment variables as GitHub Secrets kept credentials out of the codebase"
+      "GitHub Secrets kept credentials out of the codebase"
     ],
     "mistakes": [
-      "I committed my .env file to the repo early on — had to rotate all credentials",
-      "My workflow had no caching and took 8 minutes to install dependencies every run",
-      "I did not test the workflow on a feature branch and it broke main on the first merge"
+      "I committed my .env file to the repo early on",
+      "My workflow had no caching and took 8 minutes per run",
+      "I did not test the workflow on a feature branch first"
     ],
     "lessons": [
-      "Use actions/cache for pip dependencies — it cuts 70% of runtime",
+      "Use actions/cache for pip dependencies",
       "Always test workflows on a branch before merging",
       "A failing CI pipeline is better than a broken deployment"
     ],
@@ -177,20 +177,20 @@
     ],
     "difficulty": "Intermediate",
     "experience_points": [
-      "Good features matter more than a fancy model in most real-world problems",
-      "Domain knowledge is more valuable than any automated feature selection algorithm",
-      "Interaction features between columns sometimes reveal patterns tree models miss",
-      "Target encoding on high-cardinality columns consistently outperformed one-hot in my experiments"
+      "Good features matter more than a fancy model",
+      "Domain knowledge beats any automated feature selection algorithm",
+      "Interaction features reveal patterns tree models miss",
+      "Target encoding outperformed one-hot on high-cardinality columns"
     ],
     "mistakes": [
-      "I one-hot encoded a column with 500 unique values and blew up training time",
-      "I created features using the full dataset before splitting — data leakage again",
-      "I spent days on feature engineering when the real problem was bad data quality"
+      "I one-hot encoded a column with 500 unique values",
+      "I created features using the full dataset before splitting",
+      "I spent days on features when the real problem was bad data quality"
     ],
     "lessons": [
-      "Understand your data before engineering features — EDA first, always",
-      "Simpler features that make business sense often beat complex engineered ones",
-      "Track which features actually help using feature importance or permutation tests"
+      "Do EDA before engineering features",
+      "Simpler features that make business sense often beat complex ones",
+      "Track which features actually help using feature importance"
     ],
     "optional_code_snippet_idea": "pandas pipeline for target encoding with cross-validation to prevent leakage",
     "status": "pending",
@@ -200,7 +200,7 @@
   },
   {
     "topic_id": 7,
-    "title_seed": "Running background tasks in Python with Celery and Redis — what I wish I knew",
+    "title_seed": "Running background tasks in Python with Celery and Redis",
     "category": "Backend Engineering",
     "tags": [
       "Celery",
@@ -211,20 +211,20 @@
     ],
     "difficulty": "Intermediate",
     "experience_points": [
-      "Celery decouples heavy work from your web request cycle completely",
-      "Redis as a broker is the easiest setup — one line of config and it works",
-      "Task chaining lets you build pipelines where each step triggers the next",
-      "Flower gave me a real-time view of task queues without any extra work"
+      "Celery decouples heavy work from your web request cycle",
+      "Redis as a broker is the easiest setup",
+      "Task chaining builds pipelines where each step triggers the next",
+      "Flower gives real-time queue visibility"
     ],
     "mistakes": [
-      "I forgot to configure task serialization and got silent failures on complex objects",
-      "I ran workers with the default concurrency and overloaded a small VM",
+      "I forgot to configure task serialization and got silent failures",
+      "I ran workers with default concurrency and overloaded a VM",
       "I did not set task timeouts and a hung task blocked the queue for hours"
     ],
     "lessons": [
-      "Always set task_time_limit and soft_time_limit for every task",
-      "Log task IDs — you will need them to trace failures in production",
-      "Test your tasks as regular Python functions first before wiring Celery in"
+      "Always set task_time_limit and soft_time_limit",
+      "Log task IDs for production tracing",
+      "Test tasks as regular Python functions first"
     ],
     "optional_code_snippet_idea": "Celery task definition with retry logic, timeout, and result backend configuration",
     "status": "pending",
@@ -234,7 +234,7 @@
   },
   {
     "topic_id": 8,
-    "title_seed": "How I structured a real ML project — folders, configs, and lessons from the mess",
+    "title_seed": "How I structured a real ML project from scratch",
     "category": "Machine Learning",
     "tags": [
       "Project Structure",
@@ -244,22 +244,22 @@
     ],
     "difficulty": "Beginner to Intermediate",
     "experience_points": [
-      "Flat scripts work for notebooks but fall apart when you add a second teammate",
-      "Separating data loading, feature engineering, and modeling into modules made refactoring easy",
-      "Config files replaced hardcoded paths and made the project portable across machines",
-      "A proper .gitignore saved me from accidentally committing 2 GB of data files"
+      "Flat scripts fall apart when you add a second teammate",
+      "Separating data loading, feature engineering, and modeling made refactoring easy",
+      "Config files replaced hardcoded paths",
+      "A proper .gitignore saved me from committing 2 GB of data files"
     ],
     "mistakes": [
-      "I put all code in one 800-line script and debugging became a nightmare",
-      "I used absolute paths everywhere and the project broke on every other machine",
-      "I had no logging and spent hours adding print statements to find a bug"
+      "I put all code in one 800-line script",
+      "I used absolute paths everywhere",
+      "I had no logging and spent hours adding print statements to find bugs"
     ],
     "lessons": [
-      "Use a src layout or at minimum an app/ folder from the very start",
-      "Configuration belongs in .env or YAML files, not in source code",
-      "Logging is not optional — add it before you need it"
+      "Use a src layout or app/ folder from the start",
+      "Configuration belongs in .env or YAML, not source code",
+      "Logging is not optional"
     ],
-    "optional_code_snippet_idea": "recommended ML project folder structure with config.py pattern using python-dotenv",
+    "optional_code_snippet_idea": "recommended ML project folder structure with config.py using python-dotenv",
     "status": "pending",
     "posted_at": null,
     "blogger_post_id": null,
@@ -267,7 +267,7 @@
   },
   {
     "topic_id": 9,
-    "title_seed": "Understanding model drift and how I set up automated retraining",
+    "title_seed": "Understanding model drift and setting up automated retraining",
     "category": "MLOps",
     "tags": [
       "Drift",
@@ -278,22 +278,22 @@
     ],
     "difficulty": "Advanced",
     "experience_points": [
-      "Concept drift happens when the relationship between features and labels changes over time",
-      "Data drift happens when the input distribution shifts — the model sees new patterns it was not trained on",
-      "I used statistical tests like KS-test and PSI to detect drift in production data",
-      "Automated retraining triggered by drift detection reduced manual intervention completely"
+      "Concept drift is when the relationship between features and labels changes",
+      "Data drift is when input distribution shifts",
+      "KS-test and PSI detect drift in production data",
+      "Automated retraining triggered by drift reduced manual intervention"
     ],
     "mistakes": [
-      "I retrained on a schedule regardless of drift — wasted compute and sometimes made the model worse",
-      "I did not version the retraining data and could not debug a regression after a retrain",
-      "I confused data drift with concept drift and used the wrong detection method"
+      "I retrained on a schedule regardless of drift",
+      "I did not version the retraining data",
+      "I confused data drift with concept drift"
     ],
     "lessons": [
       "Drift detection should trigger retraining, not a calendar schedule",
-      "Always version your training datasets alongside model artifacts",
-      "Shadow deployment is the safest way to validate a retrained model before switching"
+      "Always version training datasets alongside model artifacts",
+      "Shadow deployment validates a retrained model before switching"
     ],
-    "optional_code_snippet_idea": "KS-test drift detection script that reads production prediction logs and compares to training distribution",
+    "optional_code_snippet_idea": "KS-test drift detection script comparing production predictions to training distribution",
     "status": "pending",
     "posted_at": null,
     "blogger_post_id": null,
@@ -301,7 +301,7 @@
   },
   {
     "topic_id": 10,
-    "title_seed": "PostgreSQL for ML engineers — storing features, predictions, and logs properly",
+    "title_seed": "PostgreSQL for ML engineers - storing features, predictions, and logs",
     "category": "Data Engineering",
     "tags": [
       "PostgreSQL",
@@ -312,22 +312,1042 @@
     ],
     "difficulty": "Intermediate",
     "experience_points": [
-      "A proper predictions table gave me the audit trail I needed to debug model issues",
+      "A predictions table gave me the audit trail to debug model issues",
       "Feature stores backed by PostgreSQL kept training and serving features consistent",
-      "SQLAlchemy ORM made switching between SQLite for local dev and Postgres in production seamless",
-      "Indexing on timestamp and user_id columns made prediction lookup queries 10x faster"
+      "SQLAlchemy ORM made switching between SQLite and Postgres seamless",
+      "Indexing on timestamp columns made queries 10x faster"
     ],
     "mistakes": [
-      "I stored JSON blobs in a text column instead of using PostgreSQL jsonb — queries were painfully slow",
-      "I did not add timestamps to my tables and lost the ability to filter by time range",
-      "I ran raw string queries with user input and had a SQL injection vulnerability in a test endpoint"
+      "I stored JSON blobs in a text column instead of jsonb",
+      "I did not add timestamps to my tables",
+      "I ran raw string queries with user input"
     ],
     "lessons": [
-      "Use jsonb not text for JSON data in PostgreSQL — it is indexable",
-      "Always include created_at and updated_at columns in every table from the start",
-      "Parameterized queries are non-negotiable — never concatenate user input into SQL"
+      "Use jsonb not text for JSON data in PostgreSQL",
+      "Always include created_at and updated_at columns",
+      "Parameterized queries are non-negotiable"
     ],
-    "optional_code_snippet_idea": "SQLAlchemy model for a predictions table with jsonb input features, predicted label, confidence score, and timestamp",
+    "optional_code_snippet_idea": "SQLAlchemy model for a predictions table with jsonb features, predicted label, confidence, and timestamp",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 11,
+    "title_seed": "How I used SHAP values to understand what my model was actually doing",
+    "category": "Machine Learning",
+    "tags": [
+      "SHAP",
+      "Explainability",
+      "XAI",
+      "ML",
+      "Feature Importance"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "SHAP showed me that one feature was driving 80 percent of predictions and it was a leaked column",
+      "Waterfall plots made it easy to explain individual predictions to non-technical stakeholders",
+      "TreeExplainer is fast enough to run on every prediction in a batch job",
+      "Global SHAP summaries revealed the model relied heavily on a proxy variable"
+    ],
+    "mistakes": [
+      "I trusted feature importance from the model directly without cross-checking with SHAP",
+      "I ran KernelExplainer on a large dataset and it took 6 hours",
+      "I interpreted global SHAP values without looking at local explanations"
+    ],
+    "lessons": [
+      "Always verify feature importance with SHAP before deploying",
+      "Local explanations are as important as global ones for debugging",
+      "Explainability actively helps you find bugs, not just satisfy compliance"
+    ],
+    "optional_code_snippet_idea": "SHAP TreeExplainer with waterfall plot for a single prediction on a trained XGBoost model",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 12,
+    "title_seed": "Building an end-to-end ML pipeline with Kubeflow",
+    "category": "MLOps",
+    "tags": [
+      "Kubeflow",
+      "Pipelines",
+      "Kubernetes",
+      "MLOps",
+      "Orchestration"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Kubeflow Pipelines turns each ML step into a containerized component",
+      "The pipeline UI gives a visual DAG of every run with per-node logs",
+      "Caching pipeline steps saves hours when only the final training step changed",
+      "Parameterizing pipelines enables A/B experiments on hyperparameters at scale"
+    ],
+    "mistakes": [
+      "I underestimated how much Kubernetes knowledge Kubeflow requires",
+      "I did not version my pipeline components and a dependency update broke old runs",
+      "My first pipeline had no data validation step and bad data reached model training"
+    ],
+    "lessons": [
+      "Learn Kubernetes basics before touching Kubeflow",
+      "Add a data validation component as the very first pipeline step",
+      "Version component Docker images the same way you version model artifacts"
+    ],
+    "optional_code_snippet_idea": "Kubeflow pipeline component definition with input/output artifacts and containerized step",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 13,
+    "title_seed": "How I handle imbalanced datasets in classification problems",
+    "category": "Machine Learning",
+    "tags": [
+      "Imbalanced Data",
+      "SMOTE",
+      "Classification",
+      "ML",
+      "Data Science"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "99 percent accuracy on a fraud model meant nothing - it predicted everything as non-fraud",
+      "SMOTE improved recall from 12 percent to 61 percent",
+      "Class weights in sklearn are the quickest fix without data augmentation",
+      "Stratified k-fold ensures each fold has the same class ratio"
+    ],
+    "mistakes": [
+      "I applied SMOTE before splitting and leaked synthetic samples into the test set",
+      "I optimised for accuracy on an imbalanced dataset and the model was useless",
+      "I used random oversampling and the model just memorized duplicated samples"
+    ],
+    "lessons": [
+      "Always apply resampling inside the cross-validation loop, never before splitting",
+      "Pick your metric based on business cost not accuracy",
+      "Try class weights before SMOTE - it is simpler and often just as good"
+    ],
+    "optional_code_snippet_idea": "imbalanced-learn pipeline combining SMOTE with a classifier inside stratified cross-validation",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 14,
+    "title_seed": "My experience with model versioning using DVC and Git",
+    "category": "MLOps",
+    "tags": [
+      "DVC",
+      "Model Versioning",
+      "Git",
+      "MLOps",
+      "Data Versioning"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "DVC tracks large files like datasets and model artifacts outside of Git",
+      "dvc repro reruns only changed pipeline stages",
+      "Remote storage on S3 lets any teammate pull the exact dataset I used",
+      "Git tags on DVC pipeline runs gave a clean model performance history"
+    ],
+    "mistakes": [
+      "I committed a 500 MB model file to Git before knowing DVC existed",
+      "I forgot to push DVC artifacts and my teammate could not reproduce my results",
+      "I named DVC stages inconsistently and the pipeline DAG became unreadable"
+    ],
+    "lessons": [
+      "Set up DVC on day one before your dataset gets large",
+      "Always run dvc push after dvc repro",
+      "Treat DVC pipeline stages like functions - one clear input, one clear output"
+    ],
+    "optional_code_snippet_idea": "dvc.yaml pipeline with a train stage that takes processed data and outputs a model artifact",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 15,
+    "title_seed": "How I optimised a slow ML inference API",
+    "category": "MLOps",
+    "tags": [
+      "Inference",
+      "Optimization",
+      "FastAPI",
+      "Performance",
+      "MLOps"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Loading the model on every request added 3 seconds of latency - loading at startup fixed it",
+      "Batching predictions reduced API calls by 90 percent",
+      "Model quantization with ONNX Runtime reduced memory by 60 percent with no accuracy loss",
+      "Async endpoints in FastAPI handled 10x more concurrent requests"
+    ],
+    "mistakes": [
+      "I loaded the model inside the prediction function - it reloaded on every request",
+      "I did not profile before optimising and worked on a step that contributed 2 percent of latency",
+      "I deployed a quantized model without running the full test suite"
+    ],
+    "lessons": [
+      "Always profile first - measure before you optimise",
+      "Load heavy artifacts at application startup, not at request time",
+      "Test quantized models with the same rigour as the original"
+    ],
+    "optional_code_snippet_idea": "FastAPI app with model loaded at startup using lifespan context and async prediction endpoint",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 16,
+    "title_seed": "What I learned about hyperparameter tuning beyond grid search",
+    "category": "Machine Learning",
+    "tags": [
+      "Hyperparameter Tuning",
+      "Optuna",
+      "ML",
+      "Optimization",
+      "Sklearn"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Bayesian optimisation finds better params in fewer trials than grid search",
+      "Optuna pruning stopped unpromising trials early and cut tuning time by 70 percent",
+      "Early stopping inside the objective function prevents wasting compute",
+      "Logging every trial to MLflow gave a full history to analyse which parameters mattered"
+    ],
+    "mistakes": [
+      "I ran a 500-combination grid search and the result was barely better than defaults",
+      "I tuned on the full training set without cross-validation",
+      "I treated tuning as a one-time step but optimal parameters shifted with new data"
+    ],
+    "lessons": [
+      "Start with random search before Bayesian optimisation",
+      "Always tune inside a cross-validation loop",
+      "Hyperparameter sensitivity analysis tells you which knobs actually matter"
+    ],
+    "optional_code_snippet_idea": "Optuna study with pruning callback, cross-validation objective, and MLflow integration",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 17,
+    "title_seed": "How I built a real-time feature store for online ML predictions",
+    "category": "MLOps",
+    "tags": [
+      "Feature Store",
+      "Redis",
+      "Real-time ML",
+      "MLOps",
+      "Data Engineering"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Pre-computing features in Redis reduced prediction latency from 800ms to 12ms",
+      "Keeping online and offline stores in sync was the biggest challenge",
+      "Point-in-time correct feature retrieval prevented future data leakage in training",
+      "Feature documentation saved the team from re-engineering the same features twice"
+    ],
+    "mistakes": [
+      "My first feature store had no TTL and memory ballooned to 40 GB overnight",
+      "I computed features differently in training and serving and got prediction skew",
+      "I had no monitoring on feature freshness and stale features caused a regression"
+    ],
+    "lessons": [
+      "Training and serving must use identical feature computation logic",
+      "Set TTLs on all feature keys and monitor cache hit rates",
+      "Feature stores are infrastructure - treat them like databases"
+    ],
+    "optional_code_snippet_idea": "Redis feature retrieval function with TTL management and fallback to batch-computed features",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 18,
+    "title_seed": "What gradient boosting actually does and why it beats random forests on tabular data",
+    "category": "Machine Learning",
+    "tags": [
+      "XGBoost",
+      "LightGBM",
+      "Gradient Boosting",
+      "ML",
+      "Tabular Data"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Gradient boosting builds trees sequentially each correcting errors of the previous",
+      "LightGBM is dramatically faster than XGBoost on large datasets",
+      "Early stopping prevents overfitting without manual epoch tuning",
+      "CatBoost handles categorical features natively without manual encoding"
+    ],
+    "mistakes": [
+      "I used too many trees without early stopping and overfit badly",
+      "I did not tune learning rate and tree depth together - they interact strongly",
+      "I assumed gradient boosting always beats simple models - on small data logistic regression won"
+    ],
+    "lessons": [
+      "Start with a low learning rate and more trees then use early stopping",
+      "Always have a simple baseline before gradient boosting",
+      "LightGBM leaf-wise growth can overfit on small datasets - use max_depth"
+    ],
+    "optional_code_snippet_idea": "LightGBM training with early stopping, cross-validation, and feature importance plot",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 19,
+    "title_seed": "How I containerised a multi-model ML service with Docker Compose",
+    "category": "MLOps",
+    "tags": [
+      "Docker Compose",
+      "Docker",
+      "MLOps",
+      "Microservices",
+      "Deployment"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Docker Compose ran the API, model server, Redis, and Postgres locally with one command",
+      "Health checks prevented the API from starting before the model server was ready",
+      "Named volumes kept model artifacts persistent across container restarts",
+      "Environment variable substitution kept secrets out of the config file"
+    ],
+    "mistakes": [
+      "I hardcoded service hostnames as localhost - that breaks inside Docker networks",
+      "I did not set memory limits and the model container consumed all RAM",
+      "I used the default bridge network and services could not discover each other"
+    ],
+    "lessons": [
+      "Use service names as hostnames inside Docker Compose, not localhost",
+      "Always set resource limits on containers running large models",
+      "Use a named Docker network and define it explicitly in your compose file"
+    ],
+    "optional_code_snippet_idea": "docker-compose.yml with FastAPI, Redis, and model container with health checks",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 20,
+    "title_seed": "My honest take on using Jupyter notebooks in production ML projects",
+    "category": "Machine Learning",
+    "tags": [
+      "Jupyter",
+      "Notebooks",
+      "Best Practices",
+      "ML",
+      "Python"
+    ],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "Notebooks are great for exploration but dangerous as production code",
+      "Hidden state from out-of-order cells caused bugs that took hours to trace",
+      "nbconvert converts notebooks to scripts for refactoring legacy code",
+      "Papermill enables parameterized notebook execution for scheduled reporting"
+    ],
+    "mistakes": [
+      "I shared a notebook as the deliverable and the next person could not reproduce it",
+      "I used global variables across cells and lost track of kernel state",
+      "I mixed exploration, cleaning, training, and evaluation in one 1500-line notebook"
+    ],
+    "lessons": [
+      "Use notebooks for exploration then refactor to modules before production",
+      "Restart and run all cells before sharing any notebook",
+      "One notebook should do one thing"
+    ],
+    "optional_code_snippet_idea": "Papermill notebook execution with injected parameters for automated reporting",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 21,
+    "title_seed": "How I set up model A/B testing in a production ML system",
+    "category": "MLOps",
+    "tags": [
+      "A/B Testing",
+      "Model Comparison",
+      "MLOps",
+      "Shadow Deployment",
+      "Traffic Splitting"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Shadow mode runs the new model in parallel without serving predictions to users",
+      "Traffic splitting at the API gateway is cleaner than inside the model service",
+      "Statistical significance testing determines when enough data has been collected",
+      "Logging model version with every prediction made rollback analysis straightforward"
+    ],
+    "mistakes": [
+      "I ran both models without consistent logging and could not attribute predictions",
+      "I ended the A/B test too early - the difference was noise not a real improvement",
+      "I did not define success metrics before the test started"
+    ],
+    "lessons": [
+      "Define success metrics and minimum detectable effect before starting",
+      "Log model version, prediction, confidence, and outcome for every request",
+      "Shadow deployment is safer than live traffic splitting for first comparisons"
+    ],
+    "optional_code_snippet_idea": "FastAPI middleware routing requests to model A or B by percentage with version logging",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 22,
+    "title_seed": "What I learned about data quality and why it kills more ML projects than bad algorithms",
+    "category": "Data Engineering",
+    "tags": [
+      "Data Quality",
+      "Data Validation",
+      "Great Expectations",
+      "ML",
+      "Data Engineering"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "A silent schema change caused our model to predict noise for two weeks",
+      "Great Expectations gave automated data validation before every training job",
+      "Null value spikes were the most common root cause of sudden model degradation",
+      "Data profiling before training revealed distributions that made no business sense"
+    ],
+    "mistakes": [
+      "I assumed the data pipeline was correct and skipped validation",
+      "I checked data quality only once during EDA and never again in production",
+      "I trusted row counts as a quality signal - the rows were there but values were zeros"
+    ],
+    "lessons": [
+      "Add automated data validation to every pipeline stage",
+      "Row count checks are not enough - validate distributions, null rates, and value ranges",
+      "Treat data quality alerts with the same urgency as infrastructure alerts"
+    ],
+    "optional_code_snippet_idea": "Great Expectations checkpoint with null rate, value range, and column type expectations",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 23,
+    "title_seed": "How I deployed a transformer model for NLP inference without a GPU",
+    "category": "Machine Learning",
+    "tags": [
+      "Transformers",
+      "NLP",
+      "ONNX",
+      "CPU Inference",
+      "Hugging Face"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "ONNX export reduced the transformer model size by 40 percent",
+      "INT8 quantisation cut inference time from 1.2 seconds to 180ms on CPU",
+      "Hugging Face optimum made the export and quantisation pipeline straightforward",
+      "Caching tokenizer outputs for repeated inputs eliminated redundant computation"
+    ],
+    "mistakes": [
+      "I deployed the full PyTorch model on CPU with 4 second latency per request",
+      "I quantised without checking accuracy and it degraded on edge cases",
+      "I did not benchmark different batch sizes"
+    ],
+    "lessons": [
+      "Always benchmark CPU inference before deciding you need a GPU",
+      "Test quantised models thoroughly on your data distribution",
+      "ONNX Runtime speed improvement is real and consistent"
+    ],
+    "optional_code_snippet_idea": "Hugging Face model exported to ONNX with dynamic quantisation and ONNX Runtime inference",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 24,
+    "title_seed": "How I used Airflow to orchestrate a daily ML training pipeline",
+    "category": "MLOps",
+    "tags": [
+      "Airflow",
+      "Orchestration",
+      "MLOps",
+      "DAG",
+      "Pipeline Automation"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Airflow DAGs gave a visual history of every pipeline run with task-level logs",
+      "XComs passed model metrics between tasks so the deploy task could check quality first",
+      "Retries with exponential backoff handled intermittent upstream data delays",
+      "Sensors waited for upstream data before triggering training"
+    ],
+    "mistakes": [
+      "I put heavy computation in the DAG file and it caused the scheduler to lag",
+      "I used datetime.now() inside a task and got inconsistent behaviour during backfills",
+      "I did not set task timeouts and a hung download blocked the entire pipeline"
+    ],
+    "lessons": [
+      "Keep DAG files thin - delegate computation to operators or external scripts",
+      "Use execution_date not datetime.now() for time-dependent logic",
+      "Always set execution_timeout on every task"
+    ],
+    "optional_code_snippet_idea": "Airflow DAG with data sensor, training task, evaluation task, and conditional model promotion via XCom",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 25,
+    "title_seed": "Lessons from building my first recommendation system",
+    "category": "Machine Learning",
+    "tags": [
+      "Recommendation System",
+      "Collaborative Filtering",
+      "ML",
+      "Python",
+      "Matrix Factorization"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Collaborative filtering works well with enough user interaction data",
+      "The cold start problem required a content-based fallback strategy",
+      "Implicit feedback needed different handling than explicit ratings",
+      "Offline NDCG metrics did not always correlate with online A/B test results"
+    ],
+    "mistakes": [
+      "I used RMSE to evaluate a recommendation model - wrong metric for ranking",
+      "I did not handle popularity bias and the system kept recommending the same top items",
+      "I trained on all historical data including old behaviour no longer relevant"
+    ],
+    "lessons": [
+      "Evaluate with ranking metrics like NDCG and MAP, not RMSE",
+      "Add diversity and novelty constraints to avoid filter bubbles",
+      "Recency matters - weight recent interactions more heavily"
+    ],
+    "optional_code_snippet_idea": "implicit library ALS model with confidence-weighted training on click data",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 26,
+    "title_seed": "What I learned about logging and observability in ML systems",
+    "category": "MLOps",
+    "tags": [
+      "Logging",
+      "Observability",
+      "MLOps",
+      "Python",
+      "Structured Logging"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Structured JSON logs made it possible to filter by model version in Elasticsearch",
+      "Logging prediction input hashes helped reproduce exact model behaviour",
+      "Correlation IDs tied a user request through API, feature store, model, and database",
+      "Log sampling at high traffic reduced storage cost without losing visibility"
+    ],
+    "mistakes": [
+      "I logged plain text strings and could not programmatically filter logs",
+      "I logged raw user input and created a privacy issue requiring an urgent hotfix",
+      "I had no log rotation and the disk filled up overnight taking the service down"
+    ],
+    "lessons": [
+      "Use structured logging from day one - JSON logs are queryable, plain strings are not",
+      "Never log raw user data or PII",
+      "Set up log rotation and retention policies before production"
+    ],
+    "optional_code_snippet_idea": "Python structured logging setup with correlation ID injection and JSON formatter",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 27,
+    "title_seed": "How I used transfer learning to build a classifier with very little data",
+    "category": "Machine Learning",
+    "tags": [
+      "Transfer Learning",
+      "Fine-tuning",
+      "Deep Learning",
+      "Python",
+      "Hugging Face"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Fine-tuning BERT on 500 labelled samples outperformed a custom model on 10000",
+      "Freezing early layers prevented catastrophic forgetting",
+      "Data augmentation via back-translation improved robustness",
+      "Learning rate warmup was essential to preserve pretrained weights"
+    ],
+    "mistakes": [
+      "I fine-tuned all layers with a high learning rate and the model forgot everything",
+      "I did not use a validation set and severely overfit the small dataset",
+      "I assumed a larger pretrained model always wins - a smaller one fine-tuned faster and scored higher"
+    ],
+    "lessons": [
+      "Use a very small learning rate when fine-tuning pretrained models",
+      "Freeze base layers first then gradually unfreeze",
+      "Small data problems are where transfer learning shines most"
+    ],
+    "optional_code_snippet_idea": "Hugging Face Trainer fine-tuning BERT classifier with frozen layers and learning rate warmup",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 28,
+    "title_seed": "How Kubernetes changed the way I think about ML model deployment at scale",
+    "category": "MLOps",
+    "tags": [
+      "Kubernetes",
+      "Deployment",
+      "Scaling",
+      "MLOps",
+      "Cloud"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Horizontal pod autoscaling handled traffic spikes without manual intervention",
+      "Rolling deployments let me update model versions with zero downtime",
+      "Resource requests and limits prevented one model from starving other services",
+      "Readiness probes ensured traffic only reached pods that had loaded the model"
+    ],
+    "mistakes": [
+      "I deployed without resource limits and one pod took down the entire node",
+      "I used Recreate instead of RollingUpdate and had 30 seconds of downtime",
+      "I did not configure liveness probes and a deadlocked pod kept receiving traffic"
+    ],
+    "lessons": [
+      "Always set CPU and memory requests and limits on model serving pods",
+      "Use readiness probes that actually check model health",
+      "Learn kubectl basics before deploying to production"
+    ],
+    "optional_code_snippet_idea": "Kubernetes Deployment manifest with readiness probe, resource limits, and rolling update strategy",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 29,
+    "title_seed": "What I learned doing exploratory data analysis before every ML project",
+    "category": "Data Science",
+    "tags": [
+      "EDA",
+      "Data Science",
+      "Pandas",
+      "Visualization",
+      "ML"
+    ],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "EDA revealed that 30 percent of training data had an incorrectly computed label",
+      "Distribution plots caught a bimodal feature indicating two different customer segments",
+      "Correlation matrices pointed to multicollinear features before building a linear model",
+      "Time-based EDA showed seasonal patterns the model needed to account for"
+    ],
+    "mistakes": [
+      "I skipped EDA on a tight deadline and spent days debugging bad training data",
+      "I looked at averages only and missed outliers distorting the model",
+      "I did EDA once and never revisited it when new data arrived"
+    ],
+    "lessons": [
+      "Budget time for EDA on every project",
+      "Look at distributions not just means and medians",
+      "Re-run EDA when new data batches arrive"
+    ],
+    "optional_code_snippet_idea": "pandas-profiling report with automated distribution, correlation, and missing value analysis",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 30,
+    "title_seed": "How I built a model training pipeline that runs on a schedule",
+    "category": "MLOps",
+    "tags": [
+      "Automation",
+      "Scheduling",
+      "MLOps",
+      "Python",
+      "Cron"
+    ],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "A weekly retraining cron job kept the model fresh without manual triggers",
+      "Locking the environment with a requirements hash prevented dependency drift",
+      "Slack notifications meant I never had to check training logs manually",
+      "Storing run metadata in a JSON file gave a lightweight audit trail"
+    ],
+    "mistakes": [
+      "My cron job ran as root and a bad script wiped a directory it should not have",
+      "I had no failure notification and the training job silently failed for two weeks",
+      "I ran training and serving on the same machine and training killed serving during peak traffic"
+    ],
+    "lessons": [
+      "Run scheduled jobs as a dedicated service account with minimal permissions",
+      "Always have failure alerting",
+      "Isolate training workloads from serving infrastructure completely"
+    ],
+    "optional_code_snippet_idea": "Python training script with file-based locking, Slack webhook notification, and metadata logging",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 31,
+    "title_seed": "What I learned about model testing and why most ML projects skip it",
+    "category": "MLOps",
+    "tags": [
+      "Testing",
+      "ML Testing",
+      "pytest",
+      "MLOps",
+      "Quality"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Unit testing feature engineering functions caught a bug that had been in production for months",
+      "Smoke tests on the model artifact checked output shapes before deployment",
+      "Behavioural tests checked that model output changed in the expected direction when input changed",
+      "Regression tests compared new model metrics against a baseline"
+    ],
+    "mistakes": [
+      "I deployed without automated tests and a silent type error caused wrong predictions",
+      "I only tested the happy path and missed edge cases like null feature values",
+      "I confused model evaluation with model testing - they are different and both necessary"
+    ],
+    "lessons": [
+      "Test feature engineering code the same way you test any software",
+      "Smoke tests on model outputs should be part of every CI pipeline",
+      "Behavioural tests are the most useful for catching subtle regressions"
+    ],
+    "optional_code_snippet_idea": "pytest suite with feature function unit tests, model output smoke test, and a behavioural test",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 32,
+    "title_seed": "How I used Weights and Biases to manage large-scale ML experiments",
+    "category": "MLOps",
+    "tags": [
+      "Weights and Biases",
+      "WandB",
+      "Experiment Tracking",
+      "MLOps",
+      "Visualization"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "WandB sweeps ran 200 hyperparameter combinations overnight automatically",
+      "Artifact tracking linked every checkpoint to the exact dataset and config that produced it",
+      "Real-time loss curves let me kill bad runs early",
+      "Team dashboards gave everyone visibility into what had already been tried"
+    ],
+    "mistakes": [
+      "I logged too much data per step and slowed training by 30 percent",
+      "I did not name runs consistently and the dashboard became unreadable after 50 experiments",
+      "I forgot to set the project name and all runs went into a generic project"
+    ],
+    "lessons": [
+      "Log at epoch level by default - step-level logging is only worth it for debugging",
+      "Define a naming convention for runs before your experiment count reaches double digits",
+      "Use WandB artifacts for checkpoints so every model is traceable"
+    ],
+    "optional_code_snippet_idea": "WandB run init with config logging, per-epoch metric logging, and model artifact saving",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 33,
+    "title_seed": "My experience building an ML model for time series forecasting",
+    "category": "Machine Learning",
+    "tags": [
+      "Time Series",
+      "Forecasting",
+      "ML",
+      "Python",
+      "Feature Engineering"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Lag features and rolling statistics were more predictive than any complex architecture",
+      "Train/test split must respect temporal order - random splitting causes leakage",
+      "Walk-forward validation gave a realistic estimate of production performance",
+      "The model failed during a seasonal period it had never seen"
+    ],
+    "mistakes": [
+      "I used random cross-validation on time series and got 95 percent accuracy that fell to 60 in production",
+      "I did not check for autocorrelation in residuals",
+      "I trained on normalised data but forgot to inverse-transform predictions"
+    ],
+    "lessons": [
+      "Never use random splitting for time series - always split by time",
+      "Walk-forward validation is the standard for time series",
+      "Include at least two full seasonal cycles in your training data"
+    ],
+    "optional_code_snippet_idea": "walk-forward validation loop with lag feature generation and rolling mean features",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 34,
+    "title_seed": "How I implemented a model confidence threshold to reduce bad predictions",
+    "category": "MLOps",
+    "tags": [
+      "Confidence Threshold",
+      "MLOps",
+      "Production ML",
+      "Model Reliability",
+      "Calibration"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Low-confidence predictions were routed to a human review queue",
+      "Platt scaling made predicted probabilities reflect actual outcome frequencies",
+      "Monitoring low-confidence rates detected distribution shift before accuracy metrics did",
+      "Setting the threshold with a business cost function gave defensible justification"
+    ],
+    "mistakes": [
+      "I used raw softmax probabilities without calibration - they were systematically overconfident",
+      "I set the threshold based on intuition rather than optimising on a validation set",
+      "I had no fallback for low-confidence predictions"
+    ],
+    "lessons": [
+      "Always calibrate classification models before using probabilities as confidence scores",
+      "Optimise the confidence threshold against your specific business cost function",
+      "A well-designed abstention strategy is often more valuable than a slightly better model"
+    ],
+    "optional_code_snippet_idea": "Platt scaling with CalibratedClassifierCV and threshold selection using precision-recall curve",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 35,
+    "title_seed": "What I learned about ML system design from reading production postmortems",
+    "category": "MLOps",
+    "tags": [
+      "System Design",
+      "MLOps",
+      "Production ML",
+      "Reliability",
+      "Architecture"
+    ],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Most production ML failures are data failures not model failures",
+      "Tight coupling between the feature pipeline and model service caused cascading failures",
+      "Circuit breakers prevented a downstream data outage from taking down the API",
+      "Blameless postmortem culture led to fixing systemic problems instead of blaming individuals"
+    ],
+    "mistakes": [
+      "I designed a system with no fallback and a single point of failure took everything down",
+      "I never tested what happened when the model server was unavailable",
+      "I had no runbook and recovery during an incident took twice as long"
+    ],
+    "lessons": [
+      "Design for failure - assume every dependency will go down",
+      "Have a rule-based fallback for every ML-powered feature",
+      "Write runbooks before you need them, not during an incident"
+    ],
+    "optional_code_snippet_idea": "FastAPI endpoint with circuit breaker pattern and rule-based fallback when model service is down",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 36,
+    "title_seed": "How I reduced ML model training time by 60 percent without changing the algorithm",
+    "category": "Machine Learning",
+    "tags": [
+      "Training Optimization",
+      "ML",
+      "Performance",
+      "Python",
+      "PyTorch"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Moving data preprocessing out of the training loop and caching it cut 40 percent of time",
+      "Mixed precision training with float16 doubled GPU throughput with no accuracy drop",
+      "DataLoader workers eliminated CPU bottlenecks during data loading",
+      "Gradient accumulation gave a larger effective batch size without OOM errors"
+    ],
+    "mistakes": [
+      "I preprocessed data inside the forward pass and repeated the same computation every epoch",
+      "I used batch size 1 because I was afraid of memory issues - it was 10x slower",
+      "I enabled mixed precision without checking for NaN gradients and training diverged"
+    ],
+    "lessons": [
+      "Profile your training loop before optimising",
+      "Preprocess and cache data before training begins",
+      "Always monitor gradient norms when using mixed precision"
+    ],
+    "optional_code_snippet_idea": "PyTorch training loop with mixed precision, gradient accumulation, and multi-worker DataLoader",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 37,
+    "title_seed": "What I learned about securing ML APIs and preventing model abuse",
+    "category": "MLOps",
+    "tags": [
+      "API Security",
+      "MLOps",
+      "Authentication",
+      "Rate Limiting",
+      "FastAPI"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Rate limiting prevented a scraping attack extracting training data through repeated calls",
+      "Input validation rejected adversarial inputs before reaching the model",
+      "Short-lived API key tokens reduced the blast radius of credential leaks",
+      "Logging inputs with a hash detected when someone was systematically probing the model"
+    ],
+    "mistakes": [
+      "I shipped a model API with no authentication and someone used it for their own product",
+      "I had no input size limits and a large request caused the prediction service to OOM",
+      "I logged raw prediction inputs containing personal data"
+    ],
+    "lessons": [
+      "Treat ML APIs as public-facing services with the same security standards",
+      "Validate and sanitise all inputs before they reach the model",
+      "Never log raw user inputs - hash or anonymise them first"
+    ],
+    "optional_code_snippet_idea": "FastAPI dependency for API key authentication with rate limiting and input size validation middleware",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 38,
+    "title_seed": "How I built an automated model evaluation report that runs after every training job",
+    "category": "MLOps",
+    "tags": [
+      "Model Evaluation",
+      "Automation",
+      "MLOps",
+      "Reporting",
+      "Python"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "An automated HTML report after every training run replaced manual metric checking",
+      "The report included confusion matrix, classification report, and SHAP summary plots",
+      "Versioned report artifacts let me compare any two models side by side at any time",
+      "Metric threshold alerts flagged when a new model dropped below the baseline"
+    ],
+    "mistakes": [
+      "I generated reports manually and missed a regression for two weeks",
+      "My report was a raw CSV file that stakeholders could not read",
+      "I evaluated on the full test set without segmenting and missed poor subgroup performance"
+    ],
+    "lessons": [
+      "Automate your evaluation report - if it is not automated it will not be consistent",
+      "Segment evaluation by key subgroups not just overall metrics",
+      "Store evaluation reports as versioned artifacts alongside the model"
+    ],
+    "optional_code_snippet_idea": "Python script generating an HTML evaluation report with metrics, confusion matrix, and SHAP plots",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 39,
+    "title_seed": "What choosing the wrong loss function cost me and how I learned to pick the right one",
+    "category": "Machine Learning",
+    "tags": [
+      "Loss Function",
+      "ML",
+      "Deep Learning",
+      "Model Training",
+      "Python"
+    ],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "MSE loss is sensitive to outliers - Huber loss made my regression model 20 percent more robust",
+      "Cross-entropy assumes mutually exclusive classes but I had multi-label data",
+      "Focal loss re-weighted hard examples and improved detection of rare events significantly",
+      "Custom loss functions in PyTorch are just differentiable Python functions"
+    ],
+    "mistakes": [
+      "I used MSE on a skewed distribution and the model ignored high-value minority cases",
+      "I used binary cross-entropy for a multi-class problem and debugged for days",
+      "I defined a custom loss that was not differentiable everywhere and training diverged"
+    ],
+    "lessons": [
+      "Match the loss function to your data distribution and business objective",
+      "Test custom loss functions with a numerical gradient check before full training",
+      "Switching loss functions often does more than tuning hyperparameters"
+    ],
+    "optional_code_snippet_idea": "PyTorch custom Huber loss and comparison with MSE on a regression task with outliers",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 40,
+    "title_seed": "How I use pre-commit hooks and code quality tools to keep ML code clean",
+    "category": "Machine Learning",
+    "tags": [
+      "Code Quality",
+      "pre-commit",
+      "Black",
+      "Ruff",
+      "Python"
+    ],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "Black formatting eliminated all style debates in code review",
+      "Ruff replaced flake8, isort, and pyupgrade with 10x faster execution",
+      "pre-commit hooks ran checks on every commit and kept bad code out of the repo",
+      "Type annotations caught a function signature mismatch during refactoring before CI"
+    ],
+    "mistakes": [
+      "I added pre-commit hooks to an existing project and had to fix 3000 style violations",
+      "I skipped type annotations and spent hours debugging a shape mismatch mypy would have caught",
+      "I configured Black and another formatter together and they kept reverting each other"
+    ],
+    "lessons": [
+      "Add formatting and linting tools at project start - retrofitting is painful",
+      "Use one formatter and stick to it",
+      "Type annotations in ML code are worth the effort"
+    ],
+    "optional_code_snippet_idea": ".pre-commit-config.yaml with Black, Ruff, and mypy hooks for a Python ML project",
     "status": "pending",
     "posted_at": null,
     "blogger_post_id": null,
