@@ -3,7 +3,12 @@
     "topic_id": 1,
     "title_seed": "What I learned while deploying ML models with FastAPI and Docker",
     "category": "MLOps",
-    "tags": ["FastAPI", "Docker", "Deployment", "Python"],
+    "tags": [
+      "FastAPI",
+      "Docker",
+      "Deployment",
+      "Python"
+    ],
     "difficulty": "Beginner to Intermediate",
     "experience_points": [
       "Deployment is more than just creating an API endpoint",
@@ -22,16 +27,21 @@
       "Your model artifact path should come from an environment variable, not hardcoded"
     ],
     "optional_code_snippet_idea": "simple FastAPI prediction endpoint with Pydantic input model and error handling",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-23T06:05:49.338111+00:00",
+    "blogger_post_id": "849822992657554497",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/"
   },
   {
     "topic_id": 2,
     "title_seed": "How MLflow changed the way I track ML experiments",
     "category": "MLOps",
-    "tags": ["MLflow", "Experiment Tracking", "Python", "ML"],
+    "tags": [
+      "MLflow",
+      "Experiment Tracking",
+      "Python",
+      "ML"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "Before MLflow I was saving metrics in print statements and notebooks",
@@ -59,7 +69,12 @@
     "topic_id": 3,
     "title_seed": "Mistakes I made while training my first ML model",
     "category": "Machine Learning",
-    "tags": ["ML", "Model Training", "Data Science", "Beginner"],
+    "tags": [
+      "ML",
+      "Model Training",
+      "Data Science",
+      "Beginner"
+    ],
     "difficulty": "Beginner",
     "experience_points": [
       "I trained on the full dataset without a proper train/test split",
@@ -87,7 +102,13 @@
     "topic_id": 4,
     "title_seed": "Why model monitoring matters more than model training",
     "category": "MLOps",
-    "tags": ["Monitoring", "MLOps", "Prometheus", "Grafana", "Drift"],
+    "tags": [
+      "Monitoring",
+      "MLOps",
+      "Prometheus",
+      "Grafana",
+      "Drift"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "A model that performs well in testing can silently degrade in production",
@@ -115,7 +136,12 @@
     "topic_id": 5,
     "title_seed": "How I set up a CI/CD pipeline for ML models using GitHub Actions",
     "category": "MLOps",
-    "tags": ["GitHub Actions", "CI/CD", "Automation", "MLOps"],
+    "tags": [
+      "GitHub Actions",
+      "CI/CD",
+      "Automation",
+      "MLOps"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "GitHub Actions is free for public repos and runs on a generous quota for private ones",
@@ -143,7 +169,12 @@
     "topic_id": 6,
     "title_seed": "What I learned about feature engineering that no tutorial tells you",
     "category": "Machine Learning",
-    "tags": ["Feature Engineering", "Data Science", "ML", "EDA"],
+    "tags": [
+      "Feature Engineering",
+      "Data Science",
+      "ML",
+      "EDA"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "Good features matter more than a fancy model in most real-world problems",
@@ -171,7 +202,13 @@
     "topic_id": 7,
     "title_seed": "Running background tasks in Python with Celery and Redis — what I wish I knew",
     "category": "Backend Engineering",
-    "tags": ["Celery", "Redis", "Python", "Async", "Background Tasks"],
+    "tags": [
+      "Celery",
+      "Redis",
+      "Python",
+      "Async",
+      "Background Tasks"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "Celery decouples heavy work from your web request cycle completely",
@@ -199,7 +236,12 @@
     "topic_id": 8,
     "title_seed": "How I structured a real ML project — folders, configs, and lessons from the mess",
     "category": "Machine Learning",
-    "tags": ["Project Structure", "Python", "Best Practices", "ML"],
+    "tags": [
+      "Project Structure",
+      "Python",
+      "Best Practices",
+      "ML"
+    ],
     "difficulty": "Beginner to Intermediate",
     "experience_points": [
       "Flat scripts work for notebooks but fall apart when you add a second teammate",
@@ -227,7 +269,13 @@
     "topic_id": 9,
     "title_seed": "Understanding model drift and how I set up automated retraining",
     "category": "MLOps",
-    "tags": ["Drift", "Retraining", "MLOps", "Automation", "Data Quality"],
+    "tags": [
+      "Drift",
+      "Retraining",
+      "MLOps",
+      "Automation",
+      "Data Quality"
+    ],
     "difficulty": "Advanced",
     "experience_points": [
       "Concept drift happens when the relationship between features and labels changes over time",
@@ -255,7 +303,13 @@
     "topic_id": 10,
     "title_seed": "PostgreSQL for ML engineers — storing features, predictions, and logs properly",
     "category": "Data Engineering",
-    "tags": ["PostgreSQL", "Data Engineering", "MLOps", "SQL", "Python"],
+    "tags": [
+      "PostgreSQL",
+      "Data Engineering",
+      "MLOps",
+      "SQL",
+      "Python"
+    ],
     "difficulty": "Intermediate",
     "experience_points": [
       "A proper predictions table gave me the audit trail I needed to debug model issues",
