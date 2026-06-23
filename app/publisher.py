@@ -9,8 +9,6 @@ Orchestrates the end-to-end publishing pipeline:
   4. Publish to Blogger (or dry-run/draft)
   5. Mark topic posted / failed
   6. Save post history log
-
-This is the main "use case" layer. It wires together all other modules.
 """
 
 import json
@@ -78,7 +76,7 @@ def run_publish_pipeline() -> Optional[PostResult]:
         logger.warning("No pending topics. Nothing to publish.")
         return None
 
-    # ── Step 3: Write article from notes ──────────────────────────────────
+    # ── Step 3: Write article from notes ─────────────────────────────────
     try:
         article = write_article(topic)
         logger.info(f"Article written: '{article.title}'")

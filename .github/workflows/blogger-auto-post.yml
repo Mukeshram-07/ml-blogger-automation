@@ -67,7 +67,7 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           DRAFT_MODE: ${{ github.event.inputs.draft_mode || 'false' }}
 
-          # Optional LLM
+          # Groq LLM
           USE_LLM: ${{ secrets.USE_LLM || 'true' }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: ${{ secrets.GROQ_MODEL || 'llama-3.3-70b-versatile' }}

@@ -8,7 +8,7 @@ All settings are read from environment variables via .env file.
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 class Config:
@@ -25,9 +25,7 @@ class Config:
     USE_LLM: bool = os.getenv("USE_LLM", "true").lower() == "true"
 
     # ── Publish behavior ─────────────────────────────────────────────────
-    # DRY_RUN=true → runs everything but does NOT call Blogger API
     DRY_RUN: bool = os.getenv("DRY_RUN", "false").lower() == "true"
-    # DRAFT_MODE=true → publishes to Blogger as draft (not live)
     DRAFT_MODE: bool = os.getenv("DRAFT_MODE", "false").lower() == "true"
 
     # ── File paths ────────────────────────────────────────────────────────
@@ -38,7 +36,7 @@ class Config:
 
     # ── Author ────────────────────────────────────────────────────────────
     AUTHOR_NAME: str = os.getenv("AUTHOR_NAME", "Mukesh")
-    BLOG_LABELS: list = []  # populated per post from topic tags
+    BLOG_LABELS: list = []
 
     # ── Retry config ──────────────────────────────────────────────────────
     MAX_RETRIES: int = int(os.getenv("MAX_RETRIES", "3"))

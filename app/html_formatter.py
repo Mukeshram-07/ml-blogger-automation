@@ -4,9 +4,9 @@ html_formatter.py
 Converts an Article model into clean Blogger-compatible HTML.
 
 Design goals:
-- Semantic HTML (h2, p, ul, blockquote, pre)
+- Semantic HTML (h2, h3, p, ul, pre/code)
 - Readable in Blogger's post editor
-- Mobile-friendly inline styles where needed
+- Mobile-friendly inline styles
 - No external CSS dependencies
 """
 
@@ -20,10 +20,6 @@ H2_STYLE = 'style="font-size:1.4em; color:#2c3e50; margin-top:2em; margin-bottom
 P_STYLE = 'style="font-size:1em; line-height:1.75; color:#333; margin-bottom:1em;"'
 UL_STYLE = 'style="line-height:1.9; color:#333; padding-left:1.5em;"'
 LI_STYLE = 'style="margin-bottom:0.4em;"'
-BLOCKQUOTE_STYLE = (
-    'style="border-left:4px solid #3498db; padding:0.6em 1em; '
-    'background:#f0f7fd; color:#555; font-style:italic; margin:1.5em 0;"'
-)
 CODE_BLOCK_STYLE = (
     'style="background:#1e1e1e; color:#d4d4d4; padding:1em 1.2em; '
     'border-radius:6px; font-family:monospace; font-size:0.92em; '
@@ -38,55 +34,48 @@ FOOTER_STYLE = 'style="font-size:0.88em; color:#888; margin-top:2.5em; padding-t
 
 
 def _p(text: str) -> str:
-    """Wrap text in a styled paragraph tag."""
     return f"<p {P_STYLE}>{text}</p>\n"
 
 
 def _h2(text: str) -> str:
-    """Wrap text in a styled h2 tag."""
     return f"<h2 {H2_STYLE}>{text}</h2>\n"
 
 
 def _ul(items: list) -> str:
-    """Convert a list of strings to a styled unordered list."""
     if not items:
         return ""
     li_items = "".join(f"<li {LI_STYLE}>{item}</li>\n" for item in items)
     return f"<ul {UL_STYLE}>\n{li_items}</ul>\n"
 
 
-def _blockquote(text: str) -> str:
-    return f"<blockquote {BLOCKQUOTE_STYLE}>{text}</blockquote>\n"
-
-
 def _hr() -> str:
     return f"<hr {DIVIDER_STYLE}/>\n"
 
 
-def _newlines_to_paragraphs(text: str) -> str:
-    """
-    Convert multi-line text into multiple <p> tags.
-    Splits on double newlines or single newlines for bullet-like lines.
-    """
-    lines = [line.strip() for line in text.strip().split("\n") if line.strip()]
-    result = []
-    for line in lines:
-        if line.startswith("- "):
-            # Treat as a list item — collect into a ul block handled separately
-            result.append(f"<li {LI_STYLE}>{line[2:]}</li>")
-        else:
-            result.append(_p(line))
-    return "".join(result)
+def _inline_markdown(text: str) -> str:
+    """Convert inline markdown (bold, italic, inline code) to HTML."""
+    import re
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"__(.+?)__", r"<strong>\1</strong>", text)
+    text = re.sub(r"\*(.+?)\*", r"<em>\1</em>", text)
+    text = re.sub(r"_(.+?)_", r"<em>\1</em>", text)
+    text = re.sub(
+        r"`(.+?)`",
+        r'<code style="background:#f0f0f0; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.92em;">\1</code>',
+        text,
+    )
+    return text
 
 
-def _format_bullet_section(raw_text: str) -> str:
+def _format_section_content(raw_text: str) -> str:
     """
-    Renders section content into HTML.
-    Handles: bullet lists, ### subheadings, code fences, bold, paragraphs.
+    Renders section content to HTML.
+    Handles: bullet lists, ### subheadings, code fences, bold/italic, paragraphs.
     """
     if not raw_text.strip():
         return ""
 
+    import re as _re
     html = []
     lines = raw_text.split("\n")
     in_code_block = False
@@ -110,9 +99,7 @@ def _format_bullet_section(raw_text: str) -> str:
             else:
                 in_code_block = False
                 code_content = "\n".join(code_lines)
-                html.append(
-                    f"<pre><code {CODE_BLOCK_STYLE}>{code_content}</code></pre>\n"
-                )
+                html.append(f"<pre><code {CODE_BLOCK_STYLE}>{code_content}</code></pre>\n")
             continue
 
         if in_code_block:
@@ -131,21 +118,17 @@ def _format_bullet_section(raw_text: str) -> str:
 
         # ── Bullet line ───────────────────────────────────────────────────
         if stripped.startswith("- ") or stripped.startswith("* "):
-            content = stripped[2:].strip()
-            content = _inline_markdown(content)
-            bullet_buffer.append(content)
+            bullet_buffer.append(_inline_markdown(stripped[2:].strip()))
             continue
 
         # ── Numbered list ─────────────────────────────────────────────────
-        import re as _re
         if _re.match(r"^\d+\.\s", stripped):
             flush_bullets()
             content = _re.sub(r"^\d+\.\s", "", stripped)
-            content = _inline_markdown(content)
-            html.append(f"<p {P_STYLE}>{content}</p>\n")
+            html.append(_p(_inline_markdown(content)))
             continue
 
-        # ── Empty line — flush bullets ────────────────────────────────────
+        # ── Empty line ────────────────────────────────────────────────────
         if not stripped:
             flush_bullets()
             continue
@@ -158,26 +141,7 @@ def _format_bullet_section(raw_text: str) -> str:
     return "".join(html)
 
 
-def _inline_markdown(text: str) -> str:
-    """Convert inline markdown (bold, italic, inline code) to HTML."""
-    import re
-    # Bold **text** or __text__
-    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
-    text = re.sub(r"__(.+?)__", r"<strong>\1</strong>", text)
-    # Italic *text* or _text_
-    text = re.sub(r"\*(.+?)\*", r"<em>\1</em>", text)
-    text = re.sub(r"_(.+?)_", r"<em>\1</em>", text)
-    # Inline code `code`
-    text = re.sub(
-        r"`(.+?)`",
-        r'<code style="background:#f0f0f0; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.92em;">\1</code>',
-        text,
-    )
-    return text
-
-
 def _tags_html(tags: list) -> str:
-    """Render tags as styled inline badges."""
     if not tags:
         return ""
     badges = "".join(f'<span {TAG_STYLE}>{tag}</span>' for tag in tags)
@@ -187,6 +151,7 @@ def _tags_html(tags: list) -> str:
 def format_article_to_html(article: Article) -> str:
     """
     Convert a structured Article into clean Blogger-ready HTML.
+    Text only — no images.
     """
     logger.info(f"Formatting article '{article.title}' to HTML.")
     html_parts = []
@@ -198,24 +163,24 @@ def format_article_to_html(article: Article) -> str:
     # ── Body sections ──────────────────────────────────────────────────────
     for section in article.sections:
         html_parts.append(_h2(section.heading))
-        html_parts.append(_format_bullet_section(section.content))
+        html_parts.append(_format_section_content(section.content))
 
     # ── Mistakes section ───────────────────────────────────────────────────
     if article.mistakes_section:
         html_parts.append(_hr())
         html_parts.append(_h2("⚠️ Mistakes I Made"))
-        html_parts.append(_format_bullet_section(article.mistakes_section))
+        html_parts.append(_format_section_content(article.mistakes_section))
 
     # ── Lessons section ────────────────────────────────────────────────────
     if article.lessons_section:
         html_parts.append(_hr())
         html_parts.append(_h2("✅ What I Learned (The Hard Way)"))
-        html_parts.append(_format_bullet_section(article.lessons_section))
+        html_parts.append(_format_section_content(article.lessons_section))
 
     # ── Conclusion ─────────────────────────────────────────────────────────
     html_parts.append(_hr())
     html_parts.append(_h2("Wrapping Up"))
-    html_parts.append(_format_bullet_section(article.conclusion))
+    html_parts.append(_format_section_content(article.conclusion))
 
     # ── Tags footer ────────────────────────────────────────────────────────
     html_parts.append(_hr())

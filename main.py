@@ -13,6 +13,9 @@ Usage:
 import argparse
 import sys
 
+# Load env vars FIRST before any app module imports
+from dotenv import load_dotenv
+load_dotenv(override=True)
 from app.config import config
 from app.logger import logger
 
