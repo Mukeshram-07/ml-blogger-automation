@@ -93,10 +93,10 @@
       "Cross-validation is not optional"
     ],
     "optional_code_snippet_idea": "sklearn Pipeline with StandardScaler, train_test_split, and cross_val_score",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-23T19:47:19.193640+00:00",
+    "blogger_post_id": "8318556452738623118",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/lessons-learned-from-my-first-machine.html"
   },
   {
     "topic_id": 4,
