@@ -81,19 +81,99 @@ def _newlines_to_paragraphs(text: str) -> str:
 
 def _format_bullet_section(raw_text: str) -> str:
     """
-    Detect if the raw_text is a bullet-list format and render accordingly.
-    If it has "- " lines, renders as <ul>. Otherwise as paragraphs.
+    Renders section content into HTML.
+    Handles: bullet lists, ### subheadings, code fences, bold, paragraphs.
     """
-    lines = [l.strip() for l in raw_text.strip().split("\n") if l.strip()]
-    bullet_lines = [l[2:] for l in lines if l.startswith("- ")]
-    prose_lines = [l for l in lines if not l.startswith("- ")]
+    if not raw_text.strip():
+        return ""
 
-    html = ""
-    if prose_lines:
-        html += _p(" ".join(prose_lines))
-    if bullet_lines:
-        html += _ul(bullet_lines)
-    return html
+    html = []
+    lines = raw_text.split("\n")
+    in_code_block = False
+    code_lines = []
+    bullet_buffer = []
+
+    def flush_bullets():
+        if bullet_buffer:
+            html.append(_ul(bullet_buffer))
+            bullet_buffer.clear()
+
+    for line in lines:
+        stripped = line.strip()
+
+        # ── Code fence ────────────────────────────────────────────────────
+        if stripped.startswith("```"):
+            if not in_code_block:
+                flush_bullets()
+                in_code_block = True
+                code_lines = []
+            else:
+                in_code_block = False
+                code_content = "\n".join(code_lines)
+                html.append(
+                    f"<pre><code {CODE_BLOCK_STYLE}>{code_content}</code></pre>\n"
+                )
+            continue
+
+        if in_code_block:
+            code_lines.append(line)
+            continue
+
+        # ── H3 subheading ─────────────────────────────────────────────────
+        if stripped.startswith("### "):
+            flush_bullets()
+            subheading = stripped[4:].strip()
+            html.append(
+                f'<h3 style="font-size:1.1em; color:#34495e; margin-top:1.4em; margin-bottom:0.3em;">'
+                f'{subheading}</h3>\n'
+            )
+            continue
+
+        # ── Bullet line ───────────────────────────────────────────────────
+        if stripped.startswith("- ") or stripped.startswith("* "):
+            content = stripped[2:].strip()
+            content = _inline_markdown(content)
+            bullet_buffer.append(content)
+            continue
+
+        # ── Numbered list ─────────────────────────────────────────────────
+        import re as _re
+        if _re.match(r"^\d+\.\s", stripped):
+            flush_bullets()
+            content = _re.sub(r"^\d+\.\s", "", stripped)
+            content = _inline_markdown(content)
+            html.append(f"<p {P_STYLE}>{content}</p>\n")
+            continue
+
+        # ── Empty line — flush bullets ────────────────────────────────────
+        if not stripped:
+            flush_bullets()
+            continue
+
+        # ── Regular paragraph ─────────────────────────────────────────────
+        flush_bullets()
+        html.append(_p(_inline_markdown(stripped)))
+
+    flush_bullets()
+    return "".join(html)
+
+
+def _inline_markdown(text: str) -> str:
+    """Convert inline markdown (bold, italic, inline code) to HTML."""
+    import re
+    # Bold **text** or __text__
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"__(.+?)__", r"<strong>\1</strong>", text)
+    # Italic *text* or _text_
+    text = re.sub(r"\*(.+?)\*", r"<em>\1</em>", text)
+    text = re.sub(r"_(.+?)_", r"<em>\1</em>", text)
+    # Inline code `code`
+    text = re.sub(
+        r"`(.+?)`",
+        r'<code style="background:#f0f0f0; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:0.92em;">\1</code>',
+        text,
+    )
+    return text
 
 
 def _tags_html(tags: list) -> str:
@@ -112,7 +192,7 @@ def format_article_to_html(article: Article) -> str:
     html_parts = []
 
     # ── Intro ──────────────────────────────────────────────────────────────
-    html_parts.append(_p(article.intro))
+    html_parts.append(_p(_inline_markdown(article.intro)))
     html_parts.append(_hr())
 
     # ── Body sections ──────────────────────────────────────────────────────
@@ -135,7 +215,7 @@ def format_article_to_html(article: Article) -> str:
     # ── Conclusion ─────────────────────────────────────────────────────────
     html_parts.append(_hr())
     html_parts.append(_h2("Wrapping Up"))
-    html_parts.append(_p(article.conclusion))
+    html_parts.append(_format_bullet_section(article.conclusion))
 
     # ── Tags footer ────────────────────────────────────────────────────────
     html_parts.append(_hr())

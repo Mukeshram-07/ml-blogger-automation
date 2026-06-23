@@ -160,9 +160,7 @@ def _build_groq_prompt(topic: Topic) -> str:
         else ""
     )
 
-    return f"""Write a technical blog post based on my personal learning notes. You are my writing assistant — expand my raw notes into a polished article. Preserve my voice as a learner and builder.
-
-Title: {topic.title_seed}
+    raw_article = f"""Title: {topic.title_seed}
 Category: {topic.category}
 Difficulty: {topic.difficulty}
 Tags: {", ".join(topic.tags)}
@@ -174,36 +172,87 @@ Mistakes I made:
 {mistakes}
 
 Lessons I learned:
-{lessons}{snippet_hint}
+{lessons}{snippet_hint}"""
 
-INSTRUCTIONS:
-- Write in first person, honest and direct tone
-- Structure with clear section headings (use ## for headings)
-- Include a "## Mistakes I Made" section
-- Include a "## What I'd Do Differently" section
-- End with a short human conclusion
-- Do NOT use marketing language or buzzwords
-- Sound like a developer sharing notes, not writing SEO content
-- Keep it under 700 words
-- Return only the blog post content, no meta commentary""".strip()
+    return f"""You are an experienced technical blogger and software engineer.
+Rewrite and improve the provided article while preserving all core ideas, lessons, examples, and technical accuracy.
+
+Requirements:
+- Write in a natural human tone
+- Make the article feel like it was written by someone sharing real experience
+- Avoid robotic, repetitive, AI-sounding phrases
+- Use varied sentence lengths and natural transitions
+- Include personal observations, challenges, and lessons learned where appropriate
+- Improve grammar, vocabulary, and sentence flow
+- Replace generic wording with more engaging and professional language
+- Maintain a conversational but knowledgeable style
+- Do not exaggerate achievements or invent experiences
+- Keep the article authentic and relatable
+- Avoid buzzwords and marketing language
+- Ensure the content passes as a genuine blog post written by a developer
+- Use proper headings (H2 and H3 using ## and ###)
+- Improve readability and structure
+- Include a strong introduction and conclusion
+- Add practical insights and real-world considerations
+- Preserve all code snippets exactly as provided
+- Keep technical explanations accurate
+- Target length: 1000–1500 words
+- Optimize for SEO without keyword stuffing
+
+At the top of the output, provide:
+SEO_TITLE: <compelling title>
+META_DESC: <150-character meta description>
+TAGS: <5-8 comma-separated relevant tags>
+
+Then write the full article in clean Markdown.
+
+Writing style:
+- First-person perspective ("I learned", "I discovered", "I ran into")
+- Honest, experience-based storytelling
+- Educational but not academic
+- Clear enough for beginners, professional enough for engineers
+
+Article to rewrite:
+{raw_article}""".strip()
 
 
 def _parse_groq_response(raw_text: str, topic: Topic) -> Article:
     """
-    Parse Groq's free-form markdown output into our Article model.
-    Splits on ## headings, first paragraph = intro, last = conclusion.
+    Parse Groq's markdown output into our Article model.
+    Extracts SEO_TITLE, META_DESC, TAGS from the header block,
+    then splits the body on ## headings.
     """
     lines = raw_text.strip().split("\n")
 
+    # ── Extract SEO metadata from top lines ───────────────────────────────
+    seo_title = topic.title_seed
+    tags = topic.tags[:]
+    meta_lines_count = 0
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("SEO_TITLE:"):
+            seo_title = stripped.replace("SEO_TITLE:", "").strip()
+            meta_lines_count = i + 1
+        elif stripped.startswith("META_DESC:"):
+            meta_lines_count = i + 1
+        elif stripped.startswith("TAGS:"):
+            raw_tags = stripped.replace("TAGS:", "").strip()
+            tags = [t.strip() for t in raw_tags.split(",") if t.strip()]
+            meta_lines_count = i + 1
+
+    body_lines = lines[meta_lines_count:]
+
+    # ── Parse body: intro paragraphs then ## sections ─────────────────────
     intro_lines = []
     sections: List[ArticleSection] = []
     current_heading = None
     current_content_lines = []
+    found_first_heading = False
 
-    for line in lines:
+    for line in body_lines:
         stripped = line.strip()
         if stripped.startswith("## "):
-            # Save previous section
             if current_heading is not None:
                 sections.append(ArticleSection(
                     heading=current_heading,
@@ -211,8 +260,11 @@ def _parse_groq_response(raw_text: str, topic: Topic) -> Article:
                 ))
             current_heading = stripped[3:].strip()
             current_content_lines = []
-        elif current_heading is None:
-            # Still in intro
+            found_first_heading = True
+        elif stripped.startswith("### ") and current_heading is not None:
+            current_content_lines.append(line)
+        elif not found_first_heading:
+            # Everything before the first ## is the intro
             if stripped:
                 intro_lines.append(stripped)
         else:
@@ -227,11 +279,11 @@ def _parse_groq_response(raw_text: str, topic: Topic) -> Article:
 
     intro = " ".join(intro_lines) if intro_lines else _build_intro(topic)
 
-    # Pull out conclusion from last section if it looks like one
+    # Pull conclusion from last section if it looks like one
     conclusion = _build_conclusion(topic)
     if sections and any(
         kw in sections[-1].heading.lower()
-        for kw in ["conclusion", "wrap", "final", "summary", "closing"]
+        for kw in ["conclusion", "wrap", "final", "summary", "closing", "takeaway"]
     ):
         conclusion = sections[-1].content
         sections = sections[:-1]
@@ -240,14 +292,18 @@ def _parse_groq_response(raw_text: str, topic: Topic) -> Article:
         logger.warning("Groq response had no parseable sections. Using template fallback.")
         return _write_with_template(topic)
 
+    logger.info(
+        f"Parsed article — title: '{seo_title}' | sections: {len(sections)} | tags: {tags}"
+    )
+
     return Article(
-        title=topic.title_seed,
+        title=seo_title,
         intro=intro,
         sections=sections,
         mistakes_section=None,   # Groq weaves them into sections
         lessons_section=None,
         conclusion=conclusion,
-        tags=topic.tags,
+        tags=tags,
         category=topic.category,
     )
 
@@ -272,10 +328,11 @@ def _write_with_groq(topic: Topic) -> Article:
             {
                 "role": "system",
                 "content": (
-                    "You are a technical writing assistant helping an ML engineer "
-                    "write honest, experience-based blog posts. "
-                    "Preserve the author's voice — they are a learner and builder, not a marketer. "
-                    "Use plain language. Avoid buzzwords. Sound human and direct."
+                    "You are an experienced technical blogger and software engineer. "
+                    "You write honest, experience-based blog posts that sound genuinely human. "
+                    "Your writing is conversational yet professional, educational but not academic. "
+                    "You never use AI-sounding filler phrases. You write like a real developer "
+                    "sharing hard-won lessons from actual projects."
                 ),
             },
             {
@@ -283,8 +340,8 @@ def _write_with_groq(topic: Topic) -> Article:
                 "content": _build_groq_prompt(topic),
             },
         ],
-        "temperature": 0.7,
-        "max_tokens": 2048,
+        "temperature": 0.75,
+        "max_tokens": 3000,
     }
 
     try:
