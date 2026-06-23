@@ -1,0 +1,15 @@
+# ML Blogger Automation System — dependencies
+# Python 3.11+
+
+# Core HTTP
+requests==2.32.3
+
+# Data validation & settings
+pydantic==2.7.4
+python-dotenv==1.0.1
+
+# Groq LLM — fast free inference (llama3-8b-8192)
+# Used by content_writer.py when USE_LLM=true
+# groq package is optional — we use raw requests to avoid extra deps
+# If you prefer the official SDK, uncomment:
+# groq==0.9.0

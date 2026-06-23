@@ -1,0 +1,282 @@
+[
+  {
+    "topic_id": 1,
+    "title_seed": "What I learned while deploying ML models with FastAPI and Docker",
+    "category": "MLOps",
+    "tags": ["FastAPI", "Docker", "Deployment", "Python"],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "Deployment is more than just creating an API endpoint",
+      "Input validation with Pydantic catches problems before they reach the model",
+      "Docker keeps the environment stable across machines and CI",
+      "Health check endpoints matter when you're running in containers"
+    ],
+    "mistakes": [
+      "I ignored proper error handling at first and the API crashed silently",
+      "I did not pin library versions in requirements.txt and the container broke weeks later",
+      "I forgot to add a /health endpoint and had no way to check if the container was alive"
+    ],
+    "lessons": [
+      "Production readiness needs validation, logging, and versioning from day one",
+      "Always test your Docker image locally before pushing to any registry",
+      "Your model artifact path should come from an environment variable, not hardcoded"
+    ],
+    "optional_code_snippet_idea": "simple FastAPI prediction endpoint with Pydantic input model and error handling",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 2,
+    "title_seed": "How MLflow changed the way I track ML experiments",
+    "category": "MLOps",
+    "tags": ["MLflow", "Experiment Tracking", "Python", "ML"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Before MLflow I was saving metrics in print statements and notebooks",
+      "MLflow autolog works for sklearn and XGBoost out of the box — no extra code",
+      "The model registry lets you move models from staging to production with a single API call",
+      "Comparing runs side by side in the UI saves hours of manual spreadsheet work"
+    ],
+    "mistakes": [
+      "I ran 50 experiments without naming them and could not figure out which one was best later",
+      "I did not log the random seed and could not reproduce my best result",
+      "I logged too many metrics and the UI became cluttered and hard to read"
+    ],
+    "lessons": [
+      "Log the essentials: params, metrics, model artifact, and the dataset version",
+      "Use meaningful run names — you will thank yourself later",
+      "Reproducibility requires logging everything that affects the output"
+    ],
+    "optional_code_snippet_idea": "mlflow.start_run() block with param logging, metric logging, and model registration",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 3,
+    "title_seed": "Mistakes I made while training my first ML model",
+    "category": "Machine Learning",
+    "tags": ["ML", "Model Training", "Data Science", "Beginner"],
+    "difficulty": "Beginner",
+    "experience_points": [
+      "I trained on the full dataset without a proper train/test split",
+      "I did not check for data leakage and got suspiciously high accuracy",
+      "Scaling features made a huge difference for models like SVM and KNN",
+      "I used accuracy as the only metric on an imbalanced dataset — it was meaningless"
+    ],
+    "mistakes": [
+      "My test set contained rows that influenced the scaler fit — classic leakage",
+      "I never looked at the confusion matrix and shipped a model that missed all minority class samples",
+      "I tuned hyperparameters on the test set instead of using cross-validation"
+    ],
+    "lessons": [
+      "Always split data before any preprocessing step",
+      "Use multiple metrics: precision, recall, F1, and AUC for imbalanced problems",
+      "Cross-validation is not optional — it is the minimum standard"
+    ],
+    "optional_code_snippet_idea": "sklearn Pipeline with StandardScaler, train_test_split, and cross_val_score",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 4,
+    "title_seed": "Why model monitoring matters more than model training",
+    "category": "MLOps",
+    "tags": ["Monitoring", "MLOps", "Prometheus", "Grafana", "Drift"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "A model that performs well in testing can silently degrade in production",
+      "Data drift is the most common reason models stop working after deployment",
+      "Prometheus and Grafana together give you real-time visibility into model behavior",
+      "Setting up prediction distribution monitoring caught a data pipeline bug before users noticed"
+    ],
+    "mistakes": [
+      "I thought deployment was the finish line — I had no monitoring set up for weeks",
+      "I only monitored infrastructure metrics, not model-specific metrics like prediction confidence",
+      "I had no alerting — I found out about drift from a user complaint, not a dashboard"
+    ],
+    "lessons": [
+      "Monitor input data distributions, not just model outputs",
+      "Set up alerting on day one of deployment, not when something breaks",
+      "Treat model monitoring as a first-class engineering concern"
+    ],
+    "optional_code_snippet_idea": "custom Prometheus counter and histogram for prediction tracking in FastAPI",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 5,
+    "title_seed": "How I set up a CI/CD pipeline for ML models using GitHub Actions",
+    "category": "MLOps",
+    "tags": ["GitHub Actions", "CI/CD", "Automation", "MLOps"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "GitHub Actions is free for public repos and runs on a generous quota for private ones",
+      "I automated model validation checks before any merge to main",
+      "The pipeline runs unit tests, linting, and a smoke test on the model artifact",
+      "Environment variables as GitHub Secrets kept credentials out of the codebase"
+    ],
+    "mistakes": [
+      "I committed my .env file to the repo early on — had to rotate all credentials",
+      "My workflow had no caching and took 8 minutes to install dependencies every run",
+      "I did not test the workflow on a feature branch and it broke main on the first merge"
+    ],
+    "lessons": [
+      "Use actions/cache for pip dependencies — it cuts 70% of runtime",
+      "Always test workflows on a branch before merging",
+      "A failing CI pipeline is better than a broken deployment"
+    ],
+    "optional_code_snippet_idea": "GitHub Actions workflow with pip cache, pytest run, and Docker build step",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 6,
+    "title_seed": "What I learned about feature engineering that no tutorial tells you",
+    "category": "Machine Learning",
+    "tags": ["Feature Engineering", "Data Science", "ML", "EDA"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Good features matter more than a fancy model in most real-world problems",
+      "Domain knowledge is more valuable than any automated feature selection algorithm",
+      "Interaction features between columns sometimes reveal patterns tree models miss",
+      "Target encoding on high-cardinality columns consistently outperformed one-hot in my experiments"
+    ],
+    "mistakes": [
+      "I one-hot encoded a column with 500 unique values and blew up training time",
+      "I created features using the full dataset before splitting — data leakage again",
+      "I spent days on feature engineering when the real problem was bad data quality"
+    ],
+    "lessons": [
+      "Understand your data before engineering features — EDA first, always",
+      "Simpler features that make business sense often beat complex engineered ones",
+      "Track which features actually help using feature importance or permutation tests"
+    ],
+    "optional_code_snippet_idea": "pandas pipeline for target encoding with cross-validation to prevent leakage",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 7,
+    "title_seed": "Running background tasks in Python with Celery and Redis — what I wish I knew",
+    "category": "Backend Engineering",
+    "tags": ["Celery", "Redis", "Python", "Async", "Background Tasks"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "Celery decouples heavy work from your web request cycle completely",
+      "Redis as a broker is the easiest setup — one line of config and it works",
+      "Task chaining lets you build pipelines where each step triggers the next",
+      "Flower gave me a real-time view of task queues without any extra work"
+    ],
+    "mistakes": [
+      "I forgot to configure task serialization and got silent failures on complex objects",
+      "I ran workers with the default concurrency and overloaded a small VM",
+      "I did not set task timeouts and a hung task blocked the queue for hours"
+    ],
+    "lessons": [
+      "Always set task_time_limit and soft_time_limit for every task",
+      "Log task IDs — you will need them to trace failures in production",
+      "Test your tasks as regular Python functions first before wiring Celery in"
+    ],
+    "optional_code_snippet_idea": "Celery task definition with retry logic, timeout, and result backend configuration",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 8,
+    "title_seed": "How I structured a real ML project — folders, configs, and lessons from the mess",
+    "category": "Machine Learning",
+    "tags": ["Project Structure", "Python", "Best Practices", "ML"],
+    "difficulty": "Beginner to Intermediate",
+    "experience_points": [
+      "Flat scripts work for notebooks but fall apart when you add a second teammate",
+      "Separating data loading, feature engineering, and modeling into modules made refactoring easy",
+      "Config files replaced hardcoded paths and made the project portable across machines",
+      "A proper .gitignore saved me from accidentally committing 2 GB of data files"
+    ],
+    "mistakes": [
+      "I put all code in one 800-line script and debugging became a nightmare",
+      "I used absolute paths everywhere and the project broke on every other machine",
+      "I had no logging and spent hours adding print statements to find a bug"
+    ],
+    "lessons": [
+      "Use a src layout or at minimum an app/ folder from the very start",
+      "Configuration belongs in .env or YAML files, not in source code",
+      "Logging is not optional — add it before you need it"
+    ],
+    "optional_code_snippet_idea": "recommended ML project folder structure with config.py pattern using python-dotenv",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 9,
+    "title_seed": "Understanding model drift and how I set up automated retraining",
+    "category": "MLOps",
+    "tags": ["Drift", "Retraining", "MLOps", "Automation", "Data Quality"],
+    "difficulty": "Advanced",
+    "experience_points": [
+      "Concept drift happens when the relationship between features and labels changes over time",
+      "Data drift happens when the input distribution shifts — the model sees new patterns it was not trained on",
+      "I used statistical tests like KS-test and PSI to detect drift in production data",
+      "Automated retraining triggered by drift detection reduced manual intervention completely"
+    ],
+    "mistakes": [
+      "I retrained on a schedule regardless of drift — wasted compute and sometimes made the model worse",
+      "I did not version the retraining data and could not debug a regression after a retrain",
+      "I confused data drift with concept drift and used the wrong detection method"
+    ],
+    "lessons": [
+      "Drift detection should trigger retraining, not a calendar schedule",
+      "Always version your training datasets alongside model artifacts",
+      "Shadow deployment is the safest way to validate a retrained model before switching"
+    ],
+    "optional_code_snippet_idea": "KS-test drift detection script that reads production prediction logs and compares to training distribution",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  },
+  {
+    "topic_id": 10,
+    "title_seed": "PostgreSQL for ML engineers — storing features, predictions, and logs properly",
+    "category": "Data Engineering",
+    "tags": ["PostgreSQL", "Data Engineering", "MLOps", "SQL", "Python"],
+    "difficulty": "Intermediate",
+    "experience_points": [
+      "A proper predictions table gave me the audit trail I needed to debug model issues",
+      "Feature stores backed by PostgreSQL kept training and serving features consistent",
+      "SQLAlchemy ORM made switching between SQLite for local dev and Postgres in production seamless",
+      "Indexing on timestamp and user_id columns made prediction lookup queries 10x faster"
+    ],
+    "mistakes": [
+      "I stored JSON blobs in a text column instead of using PostgreSQL jsonb — queries were painfully slow",
+      "I did not add timestamps to my tables and lost the ability to filter by time range",
+      "I ran raw string queries with user input and had a SQL injection vulnerability in a test endpoint"
+    ],
+    "lessons": [
+      "Use jsonb not text for JSON data in PostgreSQL — it is indexable",
+      "Always include created_at and updated_at columns in every table from the start",
+      "Parameterized queries are non-negotiable — never concatenate user input into SQL"
+    ],
+    "optional_code_snippet_idea": "SQLAlchemy model for a predictions table with jsonb input features, predicted label, confidence score, and timestamp",
+    "status": "pending",
+    "posted_at": null,
+    "blogger_post_id": null,
+    "blogger_post_url": null
+  }
+]

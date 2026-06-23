@@ -1,0 +1,101 @@
+name: ML Blogger Auto Post
+
+on:
+  # ── Runs every 12 hours ─────────────────────────────────────────────────
+  schedule:
+    - cron: "0 6,18 * * *"   # 06:00 UTC and 18:00 UTC daily
+
+  # ── Allow manual trigger from GitHub Actions UI ─────────────────────────
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run in dry-run mode (no actual publish)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      draft_mode:
+        description: "Publish as draft"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  publish:
+    name: Publish ML Blog Post
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout code ───────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python ───────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ── 3. Cache pip dependencies ──────────────────────────────────────
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # ── 4. Install dependencies ────────────────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── 5. Run the publish pipeline ────────────────────────────────────
+      - name: Run ML Blogger Automation
+        env:
+          # Blogger / OAuth2
+          BLOGGER_BLOG_ID: ${{ secrets.BLOGGER_BLOG_ID }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+
+          # Behavior flags
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          DRAFT_MODE: ${{ github.event.inputs.draft_mode || 'false' }}
+
+          # Optional LLM
+          USE_LLM: ${{ secrets.USE_LLM || 'true' }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: ${{ secrets.GROQ_MODEL || 'llama-3.3-70b-versatile' }}
+
+          # Config
+          AUTHOR_NAME: ${{ secrets.AUTHOR_NAME || 'Mukesh' }}
+          MAX_RETRIES: "3"
+          RETRY_DELAY_SECONDS: "5"
+        run: python main.py
+
+      # ── 6. Commit updated topics.json (marks posted topics) ────────────
+      - name: Commit updated topic statuses
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add topics/topics.json
+          git add logs/ || true
+          git diff --staged --quiet || git commit -m "chore: update topic status after auto-post [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 7. Upload logs as artifact (available in Actions UI) ───────────
+      - name: Upload logs artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automation-logs-${{ github.run_id }}
+          path: logs/
+          retention-days: 14
