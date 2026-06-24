@@ -127,10 +127,10 @@
       "Treat model monitoring as a first-class engineering concern"
     ],
     "optional_code_snippet_idea": "custom Prometheus counter and histogram for prediction tracking in FastAPI",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-24T08:50:25.240586+00:00",
+    "blogger_post_id": "2456629977017355222",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/the-hidden-pitfall-of-model-deployment.html"
   },
   {
     "topic_id": 5,
