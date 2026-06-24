@@ -160,10 +160,10 @@
       "A failing CI pipeline is better than a broken deployment"
     ],
     "optional_code_snippet_idea": "GitHub Actions workflow with pip cache, pytest run, and Docker build step",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-24T19:24:03.260347+00:00",
+    "blogger_post_id": "929350562922387147",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/streamlining-mlops-with-github-actions.html"
   },
   {
     "topic_id": 6,
