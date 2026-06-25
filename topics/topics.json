@@ -193,10 +193,10 @@
       "Track which features actually help using feature importance"
     ],
     "optional_code_snippet_idea": "pandas pipeline for target encoding with cross-validation to prevent leakage",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-25T08:44:56.477909+00:00",
+    "blogger_post_id": "8423443350635326085",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/the-unspoken-truths-of-feature.html"
   },
   {
     "topic_id": 7,
