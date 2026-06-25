@@ -227,10 +227,10 @@
       "Test tasks as regular Python functions first"
     ],
     "optional_code_snippet_idea": "Celery task definition with retry logic, timeout, and result backend configuration",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-25T19:43:30.897371+00:00",
+    "blogger_post_id": "1716103721282729519",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/mastering-background-tasks-in-python.html"
   },
   {
     "topic_id": 8,
