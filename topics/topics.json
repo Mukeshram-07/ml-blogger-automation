@@ -294,10 +294,10 @@
       "Shadow deployment validates a retrained model before switching"
     ],
     "optional_code_snippet_idea": "KS-test drift detection script comparing production predictions to training distribution",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-26T19:26:24.145195+00:00",
+    "blogger_post_id": "8588840312330325953",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/navigating-model-drift-lessons-from.html"
   },
   {
     "topic_id": 10,
