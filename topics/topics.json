@@ -362,10 +362,10 @@
       "Explainability actively helps you find bugs, not just satisfy compliance"
     ],
     "optional_code_snippet_idea": "SHAP TreeExplainer with waterfall plot for a single prediction on a trained XGBoost model",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-27T19:00:31.543233+00:00",
+    "blogger_post_id": "7308642872182620361",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/demystifying-model-predictions-with.html"
   },
   {
     "topic_id": 12,
