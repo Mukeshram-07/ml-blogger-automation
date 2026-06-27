@@ -328,10 +328,10 @@
       "Parameterized queries are non-negotiable"
     ],
     "optional_code_snippet_idea": "SQLAlchemy model for a predictions table with jsonb features, predicted label, confidence, and timestamp",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-27T08:23:53.370105+00:00",
+    "blogger_post_id": "8615491605164291961",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/mastering-postgresql-for-machine.html"
   },
   {
     "topic_id": 11,
