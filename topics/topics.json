@@ -430,10 +430,10 @@
       "Try class weights before SMOTE - it is simpler and often just as good"
     ],
     "optional_code_snippet_idea": "imbalanced-learn pipeline combining SMOTE with a classifier inside stratified cross-validation",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-28T18:59:24.430985+00:00",
+    "blogger_post_id": "8985439993624651346",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/tackling-imbalanced-datasets-in.html"
   },
   {
     "topic_id": 14,
