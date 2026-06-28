@@ -396,10 +396,10 @@
       "Version component Docker images the same way you version model artifacts"
     ],
     "optional_code_snippet_idea": "Kubeflow pipeline component definition with input/output artifacts and containerized step",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-28T08:38:14.079053+00:00",
+    "blogger_post_id": "8704387463355174485",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/building-end-to-end-ml-pipelines-with.html"
   },
   {
     "topic_id": 13,
