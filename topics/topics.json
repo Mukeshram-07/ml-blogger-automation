@@ -464,10 +464,10 @@
       "Treat DVC pipeline stages like functions - one clear input, one clear output"
     ],
     "optional_code_snippet_idea": "dvc.yaml pipeline with a train stage that takes processed data and outputs a model artifact",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-29T10:17:51.608859+00:00",
+    "blogger_post_id": "5529915610363162027",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/mastering-model-versioning-with-dvc-and.html"
   },
   {
     "topic_id": 15,
