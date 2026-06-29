@@ -498,10 +498,10 @@
       "Test quantized models with the same rigour as the original"
     ],
     "optional_code_snippet_idea": "FastAPI app with model loaded at startup using lifespan context and async prediction endpoint",
-    "status": "pending",
-    "posted_at": null,
-    "blogger_post_id": null,
-    "blogger_post_url": null
+    "status": "posted",
+    "posted_at": "2026-06-29T19:30:11.289876+00:00",
+    "blogger_post_id": "8317971483597219038",
+    "blogger_post_url": "https://mukeshramdatascience.blogspot.com/2026/06/optimizing-slow-ml-inference-api.html"
   },
   {
     "topic_id": 16,
